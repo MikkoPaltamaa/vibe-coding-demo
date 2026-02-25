@@ -1,5 +1,5 @@
-import { useState, useEffect, useCallback } from 'react'
-import { Package, Plus, Search, Filter, BarChart3, AlertTriangle } from 'lucide-react'
+import { useState, useEffect, useCallback, useRef } from 'react'
+import { Package, Plus, Search, Filter, BarChart3, AlertTriangle, Sparkles } from 'lucide-react'
 import ProductTable from './components/ProductTable'
 import AddProductModal from './components/AddProductModal'
 import StatsBar from './components/StatsBar'
@@ -81,11 +81,62 @@ export default function App() {
     }
   }
 
+  const confettiRef = useRef(null)
+
+  const launchConfetti = () => {
+    const canvas = confettiRef.current
+    if (!canvas) return
+    canvas.width = window.innerWidth
+    canvas.height = window.innerHeight
+    const ctx = canvas.getContext('2d')
+    const pieces = Array.from({ length: 150 }, () => ({
+      x: Math.random() * canvas.width,
+      y: Math.random() * -canvas.height,
+      r: Math.random() * 10 + 5,
+      d: Math.random() * 150 + 50,
+      color: `hsl(${Math.random() * 360},90%,60%)`,
+      tilt: Math.random() * 10 - 5,
+      tiltSpeed: (Math.random() * 0.1) + 0.05,
+      angle: 0,
+    }))
+    let frame
+    let startTime = null
+    const duration = 3000
+    const draw = (ts) => {
+      if (!startTime) startTime = ts
+      const elapsed = ts - startTime
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
+      pieces.forEach((p) => {
+        p.angle += p.tiltSpeed
+        p.y += Math.cos(p.angle + p.d) + 2
+        p.x += Math.sin(p.angle) * 1.5
+        ctx.beginPath()
+        ctx.ellipse(p.x, p.y, p.r / 2, p.r, (p.tilt * Math.PI) / 180, 0, 2 * Math.PI)
+        ctx.fillStyle = p.color
+        ctx.fill()
+        if (p.y > canvas.height) {
+          p.y = -10
+          p.x = Math.random() * canvas.width
+        }
+      })
+      if (elapsed < duration) {
+        frame = requestAnimationFrame(draw)
+      } else {
+        ctx.clearRect(0, 0, canvas.width, canvas.height)
+      }
+    }
+    cancelAnimationFrame(frame)
+    frame = requestAnimationFrame(draw)
+  }
+
   const lowStockCount = products.filter((p) => p.quantity > 0 && p.quantity <= 10).length
   const outOfStockCount = products.filter((p) => p.quantity === 0).length
 
   return (
     <div className="min-h-screen bg-gray-50">
+      {/* Confetti Canvas */}
+      <canvas ref={confettiRef} className="fixed inset-0 pointer-events-none z-50" />
+
       {/* Header */}
       <header className="bg-white border-b border-gray-200 sticky top-0 z-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -99,13 +150,23 @@ export default function App() {
                 <p className="text-xs text-gray-500">T-Shirt Store</p>
               </div>
             </div>
-            <button
-              onClick={() => setShowAddModal(true)}
-              className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg font-medium text-sm transition-colors"
-            >
-              <Plus size={18} />
-              Add Product
-            </button>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={launchConfetti}
+                title="Celebrate!"
+                className="flex items-center gap-2 bg-pink-500 hover:bg-pink-600 text-white px-4 py-2 rounded-lg font-medium text-sm transition-colors"
+              >
+                <Sparkles size={18} />
+                Celebrate!
+              </button>
+              <button
+                onClick={() => setShowAddModal(true)}
+                className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg font-medium text-sm transition-colors"
+              >
+                <Plus size={18} />
+                Add Product
+              </button>
+            </div>
           </div>
         </div>
       </header>

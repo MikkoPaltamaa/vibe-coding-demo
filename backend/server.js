@@ -1,11 +1,13 @@
 const express = require('express');
 const cors = require('cors');
+const helmet = require('helmet');
 const Database = require('better-sqlite3');
 const path = require('path');
 
 const app = express();
 const PORT = 3001;
 
+app.use(helmet());
 app.use(cors());
 app.use(express.json());
 
