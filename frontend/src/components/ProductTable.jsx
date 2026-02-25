@@ -47,7 +47,7 @@ function QuantityEditor({ product, onChange }) {
         onChange={(e) => setValue(e.target.value)}
         onBlur={commit}
         onKeyDown={(e) => { if (e.key === 'Enter') commit(); if (e.key === 'Escape') { setValue(String(product.quantity)); setEditing(false) } }}
-        className="w-20 border border-indigo-400 rounded-lg px-2 py-1 text-sm text-center focus:outline-none focus:ring-2 focus:ring-indigo-500"
+        className="w-20 border border-indigo-400 rounded-lg px-2 py-1 text-sm text-center bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
       />
     )
   }
@@ -58,21 +58,21 @@ function QuantityEditor({ product, onChange }) {
         onClick={() => adjust(-1)}
         disabled={product.quantity === 0}
         aria-label={`Decrease quantity for ${product.name}`}
-        className="p-1 rounded-md hover:bg-gray-100 disabled:opacity-40 disabled:cursor-not-allowed text-gray-600 transition-colors"
+        className="p-1 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 disabled:opacity-40 disabled:cursor-not-allowed text-gray-600 dark:text-gray-300 transition-colors"
       >
         <Minus size={14} aria-hidden="true" />
       </button>
       <button
         onClick={() => setEditing(true)}
         aria-label={`Edit quantity for ${product.name}, current value ${product.quantity}`}
-        className="min-w-[2.5rem] text-center font-semibold text-gray-900 hover:bg-gray-100 rounded px-2 py-0.5 text-sm transition-colors"
+        className="min-w-[2.5rem] text-center font-semibold text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 rounded px-2 py-0.5 text-sm transition-colors"
       >
         {product.quantity}
       </button>
       <button
         onClick={() => adjust(1)}
         aria-label={`Increase quantity for ${product.name}`}
-        className="p-1 rounded-md hover:bg-gray-100 text-gray-600 transition-colors"
+        className="p-1 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300 transition-colors"
       >
         <Plus size={14} aria-hidden="true" />
       </button>
@@ -106,20 +106,20 @@ export default function ProductTable({ products, onDelete, onQuantityChange }) {
 
   if (products.length === 0) {
     return (
-      <div className="bg-white rounded-xl border border-gray-200 p-16 text-center">
-        <p className="text-gray-400 text-lg">No products found</p>
-        <p className="text-gray-300 text-sm mt-1">Try adjusting your search or filters</p>
+      <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-16 text-center">
+        <p className="text-gray-400 dark:text-gray-500 text-lg">No products found</p>
+        <p className="text-gray-300 dark:text-gray-600 text-sm mt-1">Try adjusting your search or filters</p>
       </div>
     )
   }
 
   return (
-    <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
+    <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
       <div className="overflow-x-auto">
         <table className="w-full text-sm">
           <caption className="sr-only">Inventory products and stock levels</caption>
           <thead>
-            <tr className="border-b border-gray-100 bg-gray-50">
+            <tr className="border-b border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/50">
               {[
                 { label: 'Product', field: 'name' },
                 { label: 'SKU', field: 'sku' },
@@ -133,7 +133,7 @@ export default function ProductTable({ products, onDelete, onQuantityChange }) {
                   key={label}
                   onClick={field ? () => toggleSort(field) : undefined}
                   aria-sort={!field ? undefined : sortField === field ? (sortDir === 'asc' ? 'ascending' : 'descending') : 'none'}
-                  className={`px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider ${field ? 'cursor-pointer hover:text-gray-700 select-none' : ''}`}
+                  className={`px-4 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider ${field ? 'cursor-pointer hover:text-gray-700 dark:hover:text-gray-200 select-none' : ''}`}
                 >
                   <span className="flex items-center gap-1">
                     {label}
@@ -143,26 +143,26 @@ export default function ProductTable({ products, onDelete, onQuantityChange }) {
               ))}
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-50">
+          <tbody className="divide-y divide-gray-50 dark:divide-gray-700">
             {sorted.map((product) => (
-              <tr key={product.id} className="hover:bg-gray-50 transition-colors group">
+              <tr key={product.id} className="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors group">
                 <td className="px-4 py-3">
                   <div>
-                    <p className="font-medium text-gray-900">{product.name}</p>
+                    <p className="font-medium text-gray-900 dark:text-white">{product.name}</p>
                     {product.description && (
-                      <p className="text-xs text-gray-400 mt-0.5 max-w-xs truncate">{product.description}</p>
+                      <p className="text-xs text-gray-400 dark:text-gray-500 mt-0.5 max-w-xs truncate">{product.description}</p>
                     )}
                   </div>
                 </td>
                 <td className="px-4 py-3">
-                  <span className="font-mono text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">{product.sku}</span>
+                  <span className="font-mono text-xs text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded">{product.sku}</span>
                 </td>
                 <td className="px-4 py-3">
                   <span className={`px-2.5 py-1 rounded-full text-xs font-medium ${CATEGORY_COLORS[product.category] || 'bg-gray-100 text-gray-600'}`}>
                     {product.category}
                   </span>
                 </td>
-                <td className="px-4 py-3 font-medium text-gray-900">
+                <td className="px-4 py-3 font-medium text-gray-900 dark:text-white">
                   ${product.price.toFixed(2)}
                 </td>
                 <td className="px-4 py-3">
@@ -173,7 +173,7 @@ export default function ProductTable({ products, onDelete, onQuantityChange }) {
                   <button
                     onClick={() => onDelete(product.id, product.name)}
                     aria-label={`Delete product ${product.name}`}
-                    className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"
+                    className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/30 dark:hover:text-red-400 rounded-lg transition-colors"
                     title="Delete product"
                   >
                     <Trash2 size={16} aria-hidden="true" />
@@ -184,7 +184,7 @@ export default function ProductTable({ products, onDelete, onQuantityChange }) {
           </tbody>
         </table>
       </div>
-      <div className="px-4 py-3 border-t border-gray-100 text-xs text-gray-400">
+      <div className="px-4 py-3 border-t border-gray-100 dark:border-gray-700 text-xs text-gray-400 dark:text-gray-500">
         Showing {products.length} product{products.length !== 1 ? 's' : ''}
       </div>
     </div>

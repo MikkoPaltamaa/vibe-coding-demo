@@ -65,25 +65,25 @@ export default function AddProductModal({ onClose, onAdd, categories }) {
         onKeyDown={(e) => {
           if (e.key === 'Escape') onClose()
         }}
-        className="relative bg-white rounded-2xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto"
+        className="relative bg-white dark:bg-gray-800 rounded-2xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto"
       >
-        <div className="flex items-center justify-between p-6 border-b border-gray-100">
-          <h2 id="add-product-title" className="text-lg font-bold text-gray-900">Add New Product</h2>
-          <button onClick={onClose} aria-label="Close add product dialog" className="p-2 hover:bg-gray-100 rounded-lg text-gray-400 hover:text-gray-600 transition-colors">
+        <div className="flex items-center justify-between p-6 border-b border-gray-100 dark:border-gray-700">
+          <h2 id="add-product-title" className="text-lg font-bold text-gray-900 dark:text-white">Add New Product</h2>
+          <button onClick={onClose} aria-label="Close add product dialog" className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors">
             <X size={20} aria-hidden="true" />
           </button>
         </div>
 
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
           {error && (
-            <div role="alert" className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
+            <div role="alert" className="bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-400 px-4 py-3 rounded-lg text-sm">
               {error}
             </div>
           )}
 
           <div className="grid grid-cols-2 gap-4">
             <div className="col-span-2">
-              <label htmlFor="product-name" className="block text-xs font-semibold text-gray-600 uppercase tracking-wide mb-1.5">
+              <label htmlFor="product-name" className="block text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide mb-1.5">
                 Product Name <span className="text-red-500" aria-hidden="true">*</span>
               </label>
               <input
@@ -93,12 +93,12 @@ export default function AddProductModal({ onClose, onAdd, categories }) {
                 onChange={set('name')}
                 placeholder="e.g. Wireless Mouse"
                 required
-                className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                className="w-full border border-gray-200 dark:border-gray-600 rounded-lg px-3 py-2.5 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
               />
             </div>
 
             <div>
-              <label htmlFor="product-sku" className="block text-xs font-semibold text-gray-600 uppercase tracking-wide mb-1.5">
+              <label htmlFor="product-sku" className="block text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide mb-1.5">
                 SKU <span className="text-red-500" aria-hidden="true">*</span>
               </label>
               <input
@@ -108,12 +108,12 @@ export default function AddProductModal({ onClose, onAdd, categories }) {
                 onChange={set('sku')}
                 placeholder="e.g. WM-0001"
                 required
-                className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent uppercase"
+                className="w-full border border-gray-200 dark:border-gray-600 rounded-lg px-3 py-2.5 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent uppercase"
               />
             </div>
 
             <div>
-              <label htmlFor="product-category" className="block text-xs font-semibold text-gray-600 uppercase tracking-wide mb-1.5">
+              <label htmlFor="product-category" className="block text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide mb-1.5">
                 Category <span className="text-red-500" aria-hidden="true">*</span>
               </label>
               <select
@@ -121,7 +121,7 @@ export default function AddProductModal({ onClose, onAdd, categories }) {
                 value={form.category}
                 onChange={set('category')}
                 required
-                className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent bg-white"
+                className="w-full border border-gray-200 dark:border-gray-600 rounded-lg px-3 py-2.5 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
               >
                 <option value="">Select category</option>
                 {allCategories.map((cat) => (
@@ -131,7 +131,7 @@ export default function AddProductModal({ onClose, onAdd, categories }) {
             </div>
 
             <div>
-              <label htmlFor="product-price" className="block text-xs font-semibold text-gray-600 uppercase tracking-wide mb-1.5">
+              <label htmlFor="product-price" className="block text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide mb-1.5">
                 Price ($) <span className="text-red-500" aria-hidden="true">*</span>
               </label>
               <input
@@ -143,12 +143,12 @@ export default function AddProductModal({ onClose, onAdd, categories }) {
                 onChange={set('price')}
                 placeholder="0.00"
                 required
-                className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                className="w-full border border-gray-200 dark:border-gray-600 rounded-lg px-3 py-2.5 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
               />
             </div>
 
             <div>
-              <label htmlFor="product-quantity" className="block text-xs font-semibold text-gray-600 uppercase tracking-wide mb-1.5">
+              <label htmlFor="product-quantity" className="block text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide mb-1.5">
                 Initial Quantity
               </label>
               <input
@@ -158,12 +158,12 @@ export default function AddProductModal({ onClose, onAdd, categories }) {
                 value={form.quantity}
                 onChange={set('quantity')}
                 placeholder="0"
-                className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                className="w-full border border-gray-200 dark:border-gray-600 rounded-lg px-3 py-2.5 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
               />
             </div>
 
             <div className="col-span-2">
-              <label htmlFor="product-description" className="block text-xs font-semibold text-gray-600 uppercase tracking-wide mb-1.5">
+              <label htmlFor="product-description" className="block text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide mb-1.5">
                 Description
               </label>
               <textarea
@@ -172,7 +172,7 @@ export default function AddProductModal({ onClose, onAdd, categories }) {
                 onChange={set('description')}
                 placeholder="Brief product description..."
                 rows={3}
-                className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent resize-none"
+                className="w-full border border-gray-200 dark:border-gray-600 rounded-lg px-3 py-2.5 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent resize-none"
               />
             </div>
           </div>
@@ -181,7 +181,7 @@ export default function AddProductModal({ onClose, onAdd, categories }) {
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 border border-gray-200 text-gray-700 px-4 py-2.5 rounded-lg text-sm font-medium hover:bg-gray-50 transition-colors"
+              className="flex-1 border border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-300 px-4 py-2.5 rounded-lg text-sm font-medium hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
             >
               Cancel
             </button>
