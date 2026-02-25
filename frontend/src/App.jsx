@@ -116,7 +116,7 @@ export default function App() {
               </div>
               <div>
                 <h1 className="text-xl font-bold text-gray-900 dark:text-white">Inventory Manager</h1>
-                <p className="text-xs text-gray-500 dark:text-gray-400">T-Shirt Store</p>
+                <p className="text-xs text-gray-600 dark:text-gray-300">T-Shirt Store</p>
               </div>
             </div>
             <div className="flex items-center gap-2">
@@ -190,7 +190,7 @@ export default function App() {
         {/* Product Table */}
         <div className="mt-4">
           {loading ? (
-            <div className="text-center py-12 text-gray-400 dark:text-gray-500">Loading products...</div>
+            <div className="text-center py-12 text-gray-600 dark:text-gray-300">Loading products...</div>
           ) : (
             <ProductTable
               products={products}
