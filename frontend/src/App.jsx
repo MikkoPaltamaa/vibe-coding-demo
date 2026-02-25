@@ -92,7 +92,7 @@ export default function App() {
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center gap-3">
               <div className="bg-indigo-600 p-2 rounded-lg">
-                <Package className="text-white" size={22} />
+                <Package className="text-white" size={22} aria-hidden="true" />
               </div>
               <div>
                 <h1 className="text-xl font-bold text-gray-900">Inventory Manager</h1>
@@ -101,9 +101,10 @@ export default function App() {
             </div>
             <button
               onClick={() => setShowAddModal(true)}
+              aria-label="Add product"
               className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg font-medium text-sm transition-colors"
             >
-              <Plus size={18} />
+              <Plus size={18} aria-hidden="true" />
               Add Product
             </button>
           </div>
@@ -119,13 +120,13 @@ export default function App() {
           <div className="mt-4 flex flex-wrap gap-3">
             {outOfStockCount > 0 && (
               <div className="flex items-center gap-2 bg-red-50 border border-red-200 text-red-700 px-4 py-2 rounded-lg text-sm">
-                <AlertTriangle size={16} />
+                <AlertTriangle size={16} aria-hidden="true" />
                 {outOfStockCount} product{outOfStockCount > 1 ? 's' : ''} out of stock
               </div>
             )}
             {lowStockCount > 0 && (
               <div className="flex items-center gap-2 bg-amber-50 border border-amber-200 text-amber-700 px-4 py-2 rounded-lg text-sm">
-                <AlertTriangle size={16} />
+                <AlertTriangle size={16} aria-hidden="true" />
                 {lowStockCount} product{lowStockCount > 1 ? 's' : ''} low on stock
               </div>
             )}
@@ -135,8 +136,10 @@ export default function App() {
         {/* Search & Filter */}
         <div className="mt-6 flex flex-col sm:flex-row gap-3">
           <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+            <label htmlFor="product-search" className="sr-only">Search products</label>
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} aria-hidden="true" />
             <input
+              id="product-search"
               type="text"
               placeholder="Search products by name, SKU..."
               value={search}
@@ -145,8 +148,10 @@ export default function App() {
             />
           </div>
           <div className="relative">
-            <Filter className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+            <label htmlFor="category-filter" className="sr-only">Filter by category</label>
+            <Filter className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} aria-hidden="true" />
             <select
+              id="category-filter"
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
               className="pl-10 pr-8 py-2.5 border border-gray-200 rounded-lg bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent appearance-none cursor-pointer min-w-[180px]"
@@ -185,6 +190,9 @@ export default function App() {
       {/* Notification */}
       {notification && (
         <div
+          role="status"
+          aria-live="polite"
+          aria-atomic="true"
           className={`fixed bottom-6 right-6 z-50 px-5 py-3 rounded-xl shadow-lg text-white text-sm font-medium transition-all ${
             notification.type === 'success' ? 'bg-green-500' :
             notification.type === 'info' ? 'bg-indigo-500' : 'bg-red-500'
