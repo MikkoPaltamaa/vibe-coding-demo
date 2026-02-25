@@ -43,7 +43,7 @@ export default function StatsBar({ products }) {
         <div key={stat.label} className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-5">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-xs text-gray-500 dark:text-gray-400 font-medium uppercase tracking-wide">{stat.label}</p>
+              <p className="text-xs text-gray-600 dark:text-gray-300 font-medium uppercase tracking-wide">{stat.label}</p>
               <p className="mt-1.5 text-2xl font-bold text-gray-900 dark:text-white">{stat.value}</p>
             </div>
             <div className={`${stat.bg} p-3 rounded-lg`}>

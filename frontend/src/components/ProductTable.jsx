@@ -98,7 +98,7 @@ export default function ProductTable({ products, onDelete, onQuantityChange }) {
   })
 
   const SortIcon = ({ field }) => {
-    if (sortField !== field) return <ChevronUp className="text-gray-300" size={14} />
+    if (sortField !== field) return <ChevronUp className="text-gray-400" size={14} />
     return sortDir === 'asc'
       ? <ChevronUp className="text-indigo-500" size={14} />
       : <ChevronDown className="text-indigo-500" size={14} />
@@ -107,8 +107,8 @@ export default function ProductTable({ products, onDelete, onQuantityChange }) {
   if (products.length === 0) {
     return (
       <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-16 text-center">
-        <p className="text-gray-400 dark:text-gray-500 text-lg">No products found</p>
-        <p className="text-gray-300 dark:text-gray-600 text-sm mt-1">Try adjusting your search or filters</p>
+        <p className="text-gray-600 dark:text-gray-300 text-lg">No products found</p>
+        <p className="text-gray-600 dark:text-gray-300 text-sm mt-1">Try adjusting your search or filters</p>
       </div>
     )
   }
@@ -133,7 +133,7 @@ export default function ProductTable({ products, onDelete, onQuantityChange }) {
                   key={label}
                   onClick={field ? () => toggleSort(field) : undefined}
                   aria-sort={!field ? undefined : sortField === field ? (sortDir === 'asc' ? 'ascending' : 'descending') : 'none'}
-                  className={`px-4 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider ${field ? 'cursor-pointer hover:text-gray-700 dark:hover:text-gray-200 select-none' : ''}`}
+                  className={`px-4 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider ${field ? 'cursor-pointer hover:text-gray-800 dark:hover:text-white select-none' : ''}`}
                 >
                   <span className="flex items-center gap-1">
                     {label}
@@ -150,12 +150,12 @@ export default function ProductTable({ products, onDelete, onQuantityChange }) {
                   <div>
                     <p className="font-medium text-gray-900 dark:text-white">{product.name}</p>
                     {product.description && (
-                      <p className="text-xs text-gray-400 dark:text-gray-500 mt-0.5 max-w-xs truncate">{product.description}</p>
+                      <p className="text-xs text-gray-600 dark:text-gray-300 mt-0.5 max-w-xs truncate">{product.description}</p>
                     )}
                   </div>
                 </td>
                 <td className="px-4 py-3">
-                  <span className="font-mono text-xs text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded">{product.sku}</span>
+                  <span className="font-mono text-xs text-gray-700 dark:text-gray-200 bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded">{product.sku}</span>
                 </td>
                 <td className="px-4 py-3">
                   <span className={`px-2.5 py-1 rounded-full text-xs font-medium ${CATEGORY_COLORS[product.category] || 'bg-gray-100 text-gray-600'}`}>
@@ -173,7 +173,7 @@ export default function ProductTable({ products, onDelete, onQuantityChange }) {
                   <button
                     onClick={() => onDelete(product.id, product.name)}
                     aria-label={`Delete product ${product.name}`}
-                    className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/30 dark:hover:text-red-400 rounded-lg transition-colors"
+                    className="p-2 text-gray-500 hover:text-red-600 hover:bg-red-50 dark:text-gray-400 dark:hover:bg-red-900/30 dark:hover:text-red-400 rounded-lg transition-colors"
                     title="Delete product"
                   >
                     <Trash2 size={16} aria-hidden="true" />
@@ -184,7 +184,7 @@ export default function ProductTable({ products, onDelete, onQuantityChange }) {
           </tbody>
         </table>
       </div>
-      <div className="px-4 py-3 border-t border-gray-100 dark:border-gray-700 text-xs text-gray-400 dark:text-gray-500">
+      <div className="px-4 py-3 border-t border-gray-100 dark:border-gray-700 text-xs text-gray-600 dark:text-gray-300">
         Showing {products.length} product{products.length !== 1 ? 's' : ''}
       </div>
     </div>

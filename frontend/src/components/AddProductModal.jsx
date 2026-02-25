@@ -69,7 +69,7 @@ export default function AddProductModal({ onClose, onAdd, categories }) {
       >
         <div className="flex items-center justify-between p-6 border-b border-gray-100 dark:border-gray-700">
           <h2 id="add-product-title" className="text-lg font-bold text-gray-900 dark:text-white">Add New Product</h2>
-          <button onClick={onClose} aria-label="Close add product dialog" className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors">
+          <button onClick={onClose} aria-label="Close add product dialog" className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg text-gray-500 hover:text-gray-700 dark:text-gray-300 dark:hover:text-white transition-colors">
             <X size={20} aria-hidden="true" />
           </button>
         </div>
@@ -83,7 +83,7 @@ export default function AddProductModal({ onClose, onAdd, categories }) {
 
           <div className="grid grid-cols-2 gap-4">
             <div className="col-span-2">
-              <label htmlFor="product-name" className="block text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide mb-1.5">
+              <label htmlFor="product-name" className="block text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wide mb-1.5">
                 Product Name <span className="text-red-500" aria-hidden="true">*</span>
               </label>
               <input
@@ -98,7 +98,7 @@ export default function AddProductModal({ onClose, onAdd, categories }) {
             </div>
 
             <div>
-              <label htmlFor="product-sku" className="block text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide mb-1.5">
+              <label htmlFor="product-sku" className="block text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wide mb-1.5">
                 SKU <span className="text-red-500" aria-hidden="true">*</span>
               </label>
               <input
@@ -113,7 +113,7 @@ export default function AddProductModal({ onClose, onAdd, categories }) {
             </div>
 
             <div>
-              <label htmlFor="product-category" className="block text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide mb-1.5">
+              <label htmlFor="product-category" className="block text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wide mb-1.5">
                 Category <span className="text-red-500" aria-hidden="true">*</span>
               </label>
               <select
@@ -131,7 +131,7 @@ export default function AddProductModal({ onClose, onAdd, categories }) {
             </div>
 
             <div>
-              <label htmlFor="product-price" className="block text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide mb-1.5">
+              <label htmlFor="product-price" className="block text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wide mb-1.5">
                 Price ($) <span className="text-red-500" aria-hidden="true">*</span>
               </label>
               <input
@@ -148,7 +148,7 @@ export default function AddProductModal({ onClose, onAdd, categories }) {
             </div>
 
             <div>
-              <label htmlFor="product-quantity" className="block text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide mb-1.5">
+              <label htmlFor="product-quantity" className="block text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wide mb-1.5">
                 Initial Quantity
               </label>
               <input
@@ -163,7 +163,7 @@ export default function AddProductModal({ onClose, onAdd, categories }) {
             </div>
 
             <div className="col-span-2">
-              <label htmlFor="product-description" className="block text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide mb-1.5">
+              <label htmlFor="product-description" className="block text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wide mb-1.5">
                 Description
               </label>
               <textarea
