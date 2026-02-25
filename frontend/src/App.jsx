@@ -1,8 +1,9 @@
-import { useState, useEffect, useCallback, useRef } from 'react'
-import { Package, Plus, Search, Filter, BarChart3, AlertTriangle, Sparkles } from 'lucide-react'
+import { useState, useEffect, useCallback } from 'react'
+import { Package, Plus, Search, Filter, AlertTriangle } from 'lucide-react'
 import ProductTable from './components/ProductTable'
 import AddProductModal from './components/AddProductModal'
 import StatsBar from './components/StatsBar'
+import ThemeToggle from './components/ThemeToggle'
 
 const API = '/api'
 
@@ -14,6 +15,25 @@ export default function App() {
   const [selectedCategory, setSelectedCategory] = useState('')
   const [showAddModal, setShowAddModal] = useState(false)
   const [notification, setNotification] = useState(null)
+  const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'system')
+
+  useEffect(() => {
+    const root = document.documentElement
+    const applyDark = (isDark) => root.classList.toggle('dark', isDark)
+
+    localStorage.setItem('theme', theme)
+    if (theme === 'dark') {
+      applyDark(true)
+    } else if (theme === 'light') {
+      applyDark(false)
+    } else {
+      const mq = window.matchMedia('(prefers-color-scheme: dark)')
+      applyDark(mq.matches)
+      const handler = (e) => applyDark(e.matches)
+      mq.addEventListener('change', handler)
+      return () => mq.removeEventListener('change', handler)
+    }
+  }, [theme])
 
   const showNotif = (message, type = 'success') => {
     setNotification({ message, type })
@@ -81,64 +101,13 @@ export default function App() {
     }
   }
 
-  const confettiRef = useRef(null)
-
-  const launchConfetti = () => {
-    const canvas = confettiRef.current
-    if (!canvas) return
-    canvas.width = window.innerWidth
-    canvas.height = window.innerHeight
-    const ctx = canvas.getContext('2d')
-    const pieces = Array.from({ length: 150 }, () => ({
-      x: Math.random() * canvas.width,
-      y: Math.random() * -canvas.height,
-      r: Math.random() * 10 + 5,
-      d: Math.random() * 150 + 50,
-      color: `hsl(${Math.random() * 360},90%,60%)`,
-      tilt: Math.random() * 10 - 5,
-      tiltSpeed: (Math.random() * 0.1) + 0.05,
-      angle: 0,
-    }))
-    let frame
-    let startTime = null
-    const duration = 3000
-    const draw = (ts) => {
-      if (!startTime) startTime = ts
-      const elapsed = ts - startTime
-      ctx.clearRect(0, 0, canvas.width, canvas.height)
-      pieces.forEach((p) => {
-        p.angle += p.tiltSpeed
-        p.y += Math.cos(p.angle + p.d) + 2
-        p.x += Math.sin(p.angle) * 1.5
-        ctx.beginPath()
-        ctx.ellipse(p.x, p.y, p.r / 2, p.r, (p.tilt * Math.PI) / 180, 0, 2 * Math.PI)
-        ctx.fillStyle = p.color
-        ctx.fill()
-        if (p.y > canvas.height) {
-          p.y = -10
-          p.x = Math.random() * canvas.width
-        }
-      })
-      if (elapsed < duration) {
-        frame = requestAnimationFrame(draw)
-      } else {
-        ctx.clearRect(0, 0, canvas.width, canvas.height)
-      }
-    }
-    cancelAnimationFrame(frame)
-    frame = requestAnimationFrame(draw)
-  }
-
   const lowStockCount = products.filter((p) => p.quantity > 0 && p.quantity <= 10).length
   const outOfStockCount = products.filter((p) => p.quantity === 0).length
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Confetti Canvas */}
-      <canvas ref={confettiRef} className="fixed inset-0 pointer-events-none z-50" />
-
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       {/* Header */}
-      <header className="bg-white border-b border-gray-200 sticky top-0 z-20">
+      <header className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 sticky top-0 z-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center gap-3">
@@ -146,20 +115,12 @@ export default function App() {
                 <Package className="text-white" size={22} aria-hidden="true" />
               </div>
               <div>
-                <h1 className="text-xl font-bold text-gray-900">Inventory Manager</h1>
-                <p className="text-xs text-gray-500">T-Shirt Store</p>
+                <h1 className="text-xl font-bold text-gray-900 dark:text-white">Inventory Manager</h1>
+                <p className="text-xs text-gray-500 dark:text-gray-400">T-Shirt Store</p>
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <button
-                onClick={launchConfetti}
-                title="Celebrate!"
-                aria-label="Launch confetti celebration"
-                className="flex items-center gap-2 bg-pink-500 hover:bg-pink-600 text-white px-4 py-2 rounded-lg font-medium text-sm transition-colors"
-              >
-                <Sparkles size={18} aria-hidden="true" />
-                Celebrate!
-              </button>
+              <ThemeToggle theme={theme} onThemeChange={setTheme} />
               <button
                 onClick={() => setShowAddModal(true)}
                 aria-label="Add product"
@@ -181,13 +142,13 @@ export default function App() {
         {(lowStockCount > 0 || outOfStockCount > 0) && (
           <div className="mt-4 flex flex-wrap gap-3">
             {outOfStockCount > 0 && (
-              <div className="flex items-center gap-2 bg-red-50 border border-red-200 text-red-700 px-4 py-2 rounded-lg text-sm">
+              <div role="alert" className="flex items-center gap-2 bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-400 px-4 py-2 rounded-lg text-sm">
                 <AlertTriangle size={16} aria-hidden="true" />
                 {outOfStockCount} product{outOfStockCount > 1 ? 's' : ''} out of stock
               </div>
             )}
             {lowStockCount > 0 && (
-              <div className="flex items-center gap-2 bg-amber-50 border border-amber-200 text-amber-700 px-4 py-2 rounded-lg text-sm">
+              <div role="alert" className="flex items-center gap-2 bg-amber-50 dark:bg-amber-900/30 border border-amber-200 dark:border-amber-800 text-amber-700 dark:text-amber-400 px-4 py-2 rounded-lg text-sm">
                 <AlertTriangle size={16} aria-hidden="true" />
                 {lowStockCount} product{lowStockCount > 1 ? 's' : ''} low on stock
               </div>
@@ -199,24 +160,24 @@ export default function App() {
         <div className="mt-6 flex flex-col sm:flex-row gap-3">
           <div className="relative flex-1">
             <label htmlFor="product-search" className="sr-only">Search products</label>
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} aria-hidden="true" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500" size={18} aria-hidden="true" />
             <input
               id="product-search"
               type="text"
               placeholder="Search products by name, SKU..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-lg bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+              className="w-full pl-10 pr-4 py-2.5 border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 text-sm text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
             />
           </div>
           <div className="relative">
             <label htmlFor="category-filter" className="sr-only">Filter by category</label>
-            <Filter className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} aria-hidden="true" />
+            <Filter className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500" size={18} aria-hidden="true" />
             <select
               id="category-filter"
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
-              className="pl-10 pr-8 py-2.5 border border-gray-200 rounded-lg bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent appearance-none cursor-pointer min-w-[180px]"
+              className="pl-10 pr-8 py-2.5 border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent appearance-none cursor-pointer min-w-[180px]"
             >
               <option value="">All Categories</option>
               {categories.map((cat) => (
@@ -229,7 +190,7 @@ export default function App() {
         {/* Product Table */}
         <div className="mt-4">
           {loading ? (
-            <div className="text-center py-12 text-gray-400">Loading products...</div>
+            <div className="text-center py-12 text-gray-400 dark:text-gray-500">Loading products...</div>
           ) : (
             <ProductTable
               products={products}
