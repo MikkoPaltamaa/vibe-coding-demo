@@ -47,7 +47,7 @@ export default function StatsBar({ products }) {
               <p className="mt-1.5 text-2xl font-bold text-gray-900">{stat.value}</p>
             </div>
             <div className={`${stat.bg} p-3 rounded-lg`}>
-              <stat.icon className={stat.color} size={20} />
+              <stat.icon className={stat.color} size={20} aria-hidden="true" />
             </div>
           </div>
         </div>
