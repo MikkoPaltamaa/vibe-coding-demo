@@ -96,7 +96,7 @@ export default function App() {
               </div>
               <div>
                 <h1 className="text-xl font-bold text-gray-900">Inventory Manager</h1>
-                <p className="text-xs text-gray-500">Retail Store</p>
+                <p className="text-xs text-gray-500">T-Shirt Store</p>
               </div>
             </div>
             <button

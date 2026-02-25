@@ -2,8 +2,7 @@ import { useState } from 'react'
 import { X } from 'lucide-react'
 
 const PREDEFINED_CATEGORIES = [
-  'Accessories', 'Appliances', 'Bags', 'Clothing', 'Electronics',
-  'Footwear', 'Home Decor', 'Home Office', 'Kitchen', 'Sports', 'Stationery',
+  "Men's", "Women's", "Kids'", 'Unisex', 'Accessories',
 ]
 
 export default function AddProductModal({ onClose, onAdd, categories }) {

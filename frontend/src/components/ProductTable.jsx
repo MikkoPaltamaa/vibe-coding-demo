@@ -2,17 +2,11 @@ import { useState } from 'react'
 import { Trash2, Minus, Plus, ChevronUp, ChevronDown } from 'lucide-react'
 
 const CATEGORY_COLORS = {
-  Electronics: 'bg-blue-100 text-blue-700',
-  Footwear: 'bg-purple-100 text-purple-700',
-  Appliances: 'bg-orange-100 text-orange-700',
-  Sports: 'bg-green-100 text-green-700',
-  Bags: 'bg-yellow-100 text-yellow-700',
-  'Home Office': 'bg-cyan-100 text-cyan-700',
-  Kitchen: 'bg-red-100 text-red-700',
-  Stationery: 'bg-pink-100 text-pink-700',
-  Accessories: 'bg-indigo-100 text-indigo-700',
-  Clothing: 'bg-violet-100 text-violet-700',
-  'Home Decor': 'bg-teal-100 text-teal-700',
+  "Men's": 'bg-blue-100 text-blue-700',
+  "Women's": 'bg-pink-100 text-pink-700',
+  "Kids'": 'bg-yellow-100 text-yellow-700',
+  'Unisex': 'bg-violet-100 text-violet-700',
+  'Accessories': 'bg-teal-100 text-teal-700',
 }
 
 function getStockBadge(quantity) {
