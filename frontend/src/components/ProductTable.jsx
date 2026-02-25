@@ -11,10 +11,10 @@ const CATEGORY_COLORS = {
 
 function getStockBadge(quantity) {
   if (quantity === 0)
-    return <span className="px-2 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-700">Out of stock</span>
+    return <span className="px-2 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-700" aria-label="Out of stock">Out of stock</span>
   if (quantity <= 10)
-    return <span className="px-2 py-0.5 rounded-full text-xs font-medium bg-amber-100 text-amber-700">Low stock</span>
-  return <span className="px-2 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-700">In stock</span>
+    return <span className="px-2 py-0.5 rounded-full text-xs font-medium bg-amber-100 text-amber-700" aria-label="Low stock">Low stock</span>
+  return <span className="px-2 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-700" aria-label="In stock">In stock</span>
 }
 
 function QuantityEditor({ product, onChange }) {
@@ -53,25 +53,28 @@ function QuantityEditor({ product, onChange }) {
   }
 
   return (
-    <div className="flex items-center gap-1.5">
+    <div className="flex items-center gap-1.5" role="group" aria-label={`Quantity controls for ${product.name}`}>
       <button
         onClick={() => adjust(-1)}
         disabled={product.quantity === 0}
+        aria-label={`Decrease quantity for ${product.name}`}
         className="p-1 rounded-md hover:bg-gray-100 disabled:opacity-40 disabled:cursor-not-allowed text-gray-600 transition-colors"
       >
-        <Minus size={14} />
+        <Minus size={14} aria-hidden="true" />
       </button>
       <button
         onClick={() => setEditing(true)}
+        aria-label={`Edit quantity for ${product.name}, current value ${product.quantity}`}
         className="min-w-[2.5rem] text-center font-semibold text-gray-900 hover:bg-gray-100 rounded px-2 py-0.5 text-sm transition-colors"
       >
         {product.quantity}
       </button>
       <button
         onClick={() => adjust(1)}
+        aria-label={`Increase quantity for ${product.name}`}
         className="p-1 rounded-md hover:bg-gray-100 text-gray-600 transition-colors"
       >
-        <Plus size={14} />
+        <Plus size={14} aria-hidden="true" />
       </button>
     </div>
   )
@@ -114,6 +117,7 @@ export default function ProductTable({ products, onDelete, onQuantityChange }) {
     <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
       <div className="overflow-x-auto">
         <table className="w-full text-sm">
+          <caption className="sr-only">Inventory products and stock levels</caption>
           <thead>
             <tr className="border-b border-gray-100 bg-gray-50">
               {[
@@ -128,6 +132,7 @@ export default function ProductTable({ products, onDelete, onQuantityChange }) {
                 <th
                   key={label}
                   onClick={field ? () => toggleSort(field) : undefined}
+                  aria-sort={!field ? undefined : sortField === field ? (sortDir === 'asc' ? 'ascending' : 'descending') : 'none'}
                   className={`px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider ${field ? 'cursor-pointer hover:text-gray-700 select-none' : ''}`}
                 >
                   <span className="flex items-center gap-1">
@@ -167,10 +172,11 @@ export default function ProductTable({ products, onDelete, onQuantityChange }) {
                 <td className="px-4 py-3">
                   <button
                     onClick={() => onDelete(product.id, product.name)}
-                    className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors opacity-0 group-hover:opacity-100"
+                    aria-label={`Delete product ${product.name}`}
+                    className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"
                     title="Delete product"
                   >
-                    <Trash2 size={16} />
+                    <Trash2 size={16} aria-hidden="true" />
                   </button>
                 </td>
               </tr>
